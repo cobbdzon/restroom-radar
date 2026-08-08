@@ -1,7 +1,10 @@
 .hero {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: clamp(1rem, 5vw, 3.5rem);
+	line-height: 1;
+
+	padding: clamp(1rem, 10vw, 10rem);
 }
 
 .hero_header {
