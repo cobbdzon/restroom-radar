@@ -39,7 +39,7 @@ function Index() {
 
 	return (
 		<>
-			<TopBar></TopBar>
+			<TopBar />
 			<div>
 				<div className={styles.hero}>
 					<h1 className={styles.hero_header}>Restroom Radar</h1>
