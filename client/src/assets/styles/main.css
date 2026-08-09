@@ -62,11 +62,38 @@ h6 {
 
 :root {
 	--font-primary: "Roboto", sans-serif;
+
+	color-scheme: light dark;
+	--bg-dark: light-dark(hsl(0 0% 90%), hsl(336 0% 1%));
+	--bg: light-dark(hsl(300 0% 95%), hsl(300 0% 4%));
+	--bg-light: light-dark(hsl(300 50% 100%), hsl(0 0% 9%));
+	--text: light-dark(hsl(300 0% 4%), hsl(300 0% 95%));
+	--text-muted: light-dark(hsl(0 0% 28%), hsl(300 0% 69%));
+	--highlight: light-dark(hsl(300 50% 100%), hsl(330 0% 39%));
+	--border: light-dark(hsl(0 0% 50%), hsl(0 0% 28%));
+	--border-muted: light-dark(hsl(340 0% 62%), hsl(300 0% 18%));
+	--primary: light-dark(hsl(357 44% 32%), hsl(0 66% 75%));
+	--secondary: light-dark(hsl(183 100% 9%), hsl(183 52% 57%));
+	--danger: light-dark(hsl(9 21% 41%), hsl(9 26% 64%));
+	--warning: light-dark(hsl(52 23% 34%), hsl(52 19% 57%));
+	--success: light-dark(hsl(147 19% 36%), hsl(146 17% 59%));
+	--info: light-dark(hsl(217 22% 41%), hsl(217 28% 65%));
+}
+
+:root[data-theme="light"] {
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
 }
 
 body {
 	font-family: var(--font-primary);
 	font-weight: 400;
+
+	background-color: var(--bg);
+	color: var(--text);
 }
 
 h1,
@@ -74,4 +101,9 @@ h2,
 h3 {
 	font-family: var(--font-primary);
 	font-weight: 700;
+}
+
+a.unstyle_link {
+	all: unset;
+	cursor: pointer;
 }
