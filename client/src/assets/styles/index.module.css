@@ -4,17 +4,60 @@
 	gap: clamp(1rem, 5vw, 3.5rem);
 	line-height: 1;
 
+	margin-top: 4rem;
 	padding: clamp(1rem, 10vw, 10rem);
 }
 
 .hero_header {
+	font-family: var(--font-heading);
+	font-weight: 800;
 	font-size: 4rem;
 }
 
 .hero_description {
-	font-size: 1.5rem;
+	font-size: 1.25rem;
+	color: var(--text-muted);
+	margin-bottom: 0.5rem;
 }
 
 .hero_button {
-	font-size: 1.5 rem;
+	font-size: 1.25rem;
+	background-color: var(--primary);
+	border-radius: 0.5rem;
+	transition:
+		transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+		background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	will-change: transform;
+
+	box-shadow:
+		0 4px 14px 0 light-dark(var(--border), transparent),
+		0 0 16px 2px light-dark(transparent, var(--primary));
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		opacity: 0;
+		transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		pointer-events: none;
+
+		box-shadow:
+			0 6px 18px 0 light-dark(var(--text), transparent),
+			0 0 24px 4px light-dark(transparent, var(--secondary));
+	}
+
+	&:hover {
+		transform: translateY(-2px);
+		background-color: var(--secondary);
+
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	&:active {
+		transform: translateY(0);
+		transition-duration: 0.1s;
+	}
 }

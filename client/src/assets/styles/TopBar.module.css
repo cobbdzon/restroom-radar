@@ -2,17 +2,40 @@
 	position: sticky;
 	top: 0;
 	z-index: 50;
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	align-items: center;
-	justify-content: space-between;
-	height: 64px;
-	padding: 0 24px;
-	background-color: #0f172a;
-	color: #ffffff;
+	height: 4rem;
+	padding-inline: 6rem;
+	background-color: color-mix(in srgb, var(--bg), var(--text) 2%);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	text-align: center;
+
+	border-bottom: 1px solid var(--border-muted);
+}
+
+.left {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.right {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1.75rem;
+
+	a {
+		color: var(--text-muted);
+		&:hover {
+			color: var(--text);
+		}
+	}
 }
 
 .logo_link {
-	font-weight: 700;
+	width: fit-content;
+	color: var(--text);
+	font-weight: 800;
+	font-family: var(--font-heading);
+	text-decoration: none;
 }

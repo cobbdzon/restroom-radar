@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Roboto:wght@400;500;700&display=swap");
 
 /* style resets */
 *,
@@ -62,6 +62,9 @@ h6 {
 
 :root {
 	--font-primary: "Roboto", sans-serif;
+	--font-heading: "Montserrat", "Roboto", sans-serif;
+
+	--shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1);
 
 	color-scheme: light dark;
 	--bg-dark: light-dark(hsl(0 0% 90%), hsl(336 0% 1%));
@@ -103,7 +106,27 @@ h3 {
 	font-weight: 700;
 }
 
-a.unstyle_link {
+a.unstyled_link {
 	all: unset;
 	cursor: pointer;
+}
+
+.styled_button {
+	background-color: var(--primary);
+	width: fit-content;
+	text-decoration: none;
+	color: var(--bg-dark);
+	background-color: var(--text);
+
+	padding: 1rem 1.5rem;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+
+	&:hover {
+		background: var(--text-muted);
+	}
+
+	&.primary {
+		background-color: var(--primary);
+	}
 }

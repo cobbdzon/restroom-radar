@@ -42,11 +42,17 @@ function Index() {
 			<TopBar />
 			<div>
 				<div className={styles.hero}>
-					<h1 className={styles.hero_header}>Restroom Radar</h1>
+					<h1 className={styles.hero_header}>
+						When nature calls, <br />
+						know where to go.
+					</h1>
 					<span className={styles.hero_description}>
-						A handy tool for your excrement expulsion concerns!
+						Your ultimate solution for urgent excrement expulsion concerns.
 					</span>
-					<a className={styles.hero_button} href="/directory">
+					<a
+						className={`${styles.hero_button} styled_button primary`}
+						href="/directory"
+					>
 						Start Exploring
 					</a>
 				</div>
