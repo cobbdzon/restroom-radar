@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import TopBar from "../components/TopBar";
 
 export const Route = createFileRoute("/directory")({
 	head: () => ({
@@ -8,5 +9,10 @@ export const Route = createFileRoute("/directory")({
 });
 
 function RouteComponent() {
-	return <div>Hello "/directory"!</div>;
+	return (
+		<>
+			<TopBar />
+			<div>Hello "/directory"!</div>
+		</>
+	);
 }
