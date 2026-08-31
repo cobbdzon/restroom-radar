@@ -11,14 +11,14 @@ function Index() {
 	return (
 		<>
 			<TopBar />
-			<div>
+			<div className={styles.page}>
 				<div className={styles.hero}>
 					<h1 className={styles.hero_header}>
 						When nature calls, <br />
-						know where to go.
+						know <span className={styles.hero_highlight}>where to go</span>.
 					</h1>
 					<span className={styles.hero_description}>
-						"Your ultimate solution for urgent excrement expulsion concerns.
+						Your ultimate solution for urgent excrement expulsion concerns.
 					</span>
 					<a
 						className={`${styles.hero_button} styled_button primary`}
