@@ -66,6 +66,11 @@ h6 {
 
 	--shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1);
 
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-pill: 999px;
+	--radius-circle: 50%;
+
 	color-scheme: light dark;
 	--bg-dark: light-dark(hsl(0 0% 90%), hsl(336 0% 1%));
 	--bg: light-dark(hsl(300 0% 95%), hsl(300 0% 4%));
@@ -118,7 +123,7 @@ a.unstyled_link {
 	background-color: var(--text);
 
 	padding: 1rem 1.5rem;
-	border-radius: 0.5rem;
+	border-radius: var(--radius-md);
 	box-shadow: var(--shadow);
 
 	&:hover {
