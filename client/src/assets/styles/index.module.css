@@ -21,13 +21,22 @@
 }
 
 .hero_button {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
 	font-size: 1.25rem;
+	font-weight: 700;
+	letter-spacing: 0.01em;
 	background-color: var(--primary);
+	color: var(--bg-light);
 	border-radius: 0.5rem;
+	isolation: isolate;
 	transition:
 		transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-		background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-	will-change: transform;
+		background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
 	box-shadow:
 		0 4px 14px 0 light-dark(var(--border), transparent),
@@ -41,13 +50,15 @@
 		opacity: 0;
 		transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 		pointer-events: none;
+		z-index: -1;
 
 		box-shadow:
 			0 6px 18px 0 light-dark(var(--text), transparent),
 			0 0 24px 4px light-dark(transparent, var(--secondary));
 	}
 
-	&:hover {
+	&:hover,
+	&:focus-visible {
 		transform: translateY(-2px);
 		background-color: var(--secondary);
 
@@ -56,8 +67,23 @@
 		}
 	}
 
+	&:focus-visible {
+		outline: 2px solid var(--secondary);
+		outline-offset: 3px;
+	}
+
 	&:active {
 		transform: translateY(0);
 		transition-duration: 0.1s;
 	}
+}
+
+.hero_button_icon {
+	width: 1.25rem;
+	height: 1.25rem;
+	transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero_button:hover .hero_button_icon {
+	transform: translateX(2px);
 }

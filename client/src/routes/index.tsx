@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import styles from "../assets/styles/index.module.css";
 import TopBar from "../components/TopBar";
 
@@ -24,6 +25,7 @@ function Index() {
 						href="/directory"
 					>
 						Start Exploring
+						<ArrowRight className={styles.hero_button_icon} />
 					</a>
 				</div>
 			</div>
