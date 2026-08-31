@@ -20,7 +20,7 @@
 	right: -10%;
 	width: 40rem;
 	height: 40rem;
-	background: light-dark(hsl(357 44% 32% / 0.16), hsl(0 66% 75% / 0.14));
+	background: color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .page::after {
@@ -28,7 +28,7 @@
 	left: -10%;
 	width: 36rem;
 	height: 36rem;
-	background: light-dark(hsl(183 100% 9% / 0.15), hsl(183 52% 57% / 0.13));
+	background: color-mix(in srgb, var(--secondary) 18%, transparent);
 }
 
 .hero {
