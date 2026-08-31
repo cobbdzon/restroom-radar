@@ -112,7 +112,6 @@ a.unstyled_link {
 }
 
 .styled_button {
-	background-color: var(--primary);
 	width: fit-content;
 	text-decoration: none;
 	color: var(--bg-dark);
