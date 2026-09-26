@@ -71,6 +71,11 @@ h6 {
 	--radius-pill: 999px;
 	--radius-circle: 50%;
 
+	--space-xs: 0.25rem;
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 1.5rem;
+
 	color-scheme: light dark;
 	--bg-dark: light-dark(hsl(0 0% 90%), hsl(336 0% 1%));
 	--bg: light-dark(hsl(300 0% 95%), hsl(300 0% 4%));
