@@ -1,0 +1,38 @@
+# Keep the build context small and stop host artifacts leaking into images.
+# Anything here is invisible to `docker build`, so only exclude paths that are
+# never needed to compile the app.
+
+# Dependencies are reinstalled inside the image against the lockfile.
+node_modules
+**/node_modules
+
+# Build output is produced inside the image; host copies are stale by definition.
+dist
+**/dist
+build
+**/build
+
+# Turbo cache and daemon state.
+.turbo
+**/.turbo
+
+# Version control.
+.git
+.gitignore
+.gitattributes
+
+# Secrets must never be baked into a layer.
+.env
+.env.*
+*.local
+
+# Editor and OS noise.
+.vscode
+.idea
+.DS_Store
+*.swp
+
+# Not needed to build or serve the client.
+docs
+README.md
+LICENSE

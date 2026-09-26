@@ -1,0 +1,48 @@
+# syntax=docker/dockerfile:1
+
+# Builds the client SPA and serves it as static files.
+#
+# The demo is read-only and backed by client-side mock data, so this image
+# contains no server and no API. The dead getRestrooms() helper is tree-shaken
+# out of the bundle, which is why nothing here depends on the server workspace
+# at runtime.
+
+FROM oven/bun:1.4.2 AS builder
+
+WORKDIR /app
+
+# Copy manifests only, so this layer is reused whenever source changes but
+# dependencies do not. --ignore-scripts is required: the root postinstall runs
+# `turbo build --filter=shared --filter=server`, which has no source to compile
+# at this point and would fail the install.
+COPY package.json bun.lock ./
+COPY client/package.json ./client/
+COPY server/package.json ./server/
+COPY shared/package.json ./shared/
+RUN bun install --frozen-lockfile --ignore-scripts
+
+# Config that the workspace builds read.
+COPY tsconfig.json turbo.json ./
+
+# Source. The client build needs shared and server compiled first, because
+# src/lib/client.ts imports the typed RPC client from `server/client`.
+COPY shared ./shared
+COPY server ./server
+COPY client ./client
+
+# Leave VITE_SERVER_URL unset so no environment-specific URL is baked into the
+# bundle. Nothing calls the API yet; this keeps it that way if that changes.
+ENV VITE_SERVER_URL=""
+RUN bun run build --filter=client
+
+
+FROM nginxinc/nginx-unprivileged:alpine AS runtime
+
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
+# The unprivileged image already runs as a non-root user and listens on 8080.
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+	CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1

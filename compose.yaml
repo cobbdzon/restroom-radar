@@ -1,0 +1,23 @@
+# Local demo stack for Restroom Radar.
+#
+# One service: the client SPA served as static files. There is no API container
+# because the demo is read-only and runs on client-side mock data.
+#
+# The published port binds to all interfaces so an upstream reverse proxy can
+# reach it over the LAN. TLS and public hosting are expected to be handled by
+# that proxy, not by this container.
+#
+#   docker compose up --build
+#
+# Override the published port with CLIENT_PORT:
+#
+#   CLIENT_PORT=3000 docker compose up --build
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.client
+    ports:
+      - "${CLIENT_PORT:-8080}:8080"
+    restart: unless-stopped
