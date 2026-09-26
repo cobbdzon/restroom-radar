@@ -76,3 +76,114 @@
 		border-radius: var(--radius-md);
 	}
 }
+
+/* Mobile hamburger button (hidden on desktop). */
+
+.hamburger {
+	display: none;
+	place-items: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	border: none;
+	border-radius: var(--radius-md);
+	color: var(--text);
+	background: transparent;
+	cursor: pointer;
+
+	&:hover {
+		background-color: color-mix(in srgb, var(--text-muted) 10%, transparent);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--secondary);
+		outline-offset: 2px;
+	}
+
+	&[aria-expanded="true"] {
+		color: var(--secondary);
+	}
+}
+
+.hamburger :global(svg) {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+/* Invisible backdrop covering the viewport below the bar. */
+
+.backdrop {
+	position: fixed;
+	inset: 4rem 0 0;
+	z-index: 40;
+	border: none;
+	padding: 0;
+	background-color: oklch(0 0 0 / 0.4);
+	animation: backdropIn 160ms ease;
+	cursor: default;
+}
+
+/* Dropdown panel pinned under the bar. */
+
+.mobileNav {
+	position: absolute;
+	z-index: 45;
+	top: 100%;
+	right: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	padding: 0.75rem;
+	border-bottom: 1px solid var(--border-muted);
+	box-shadow: 0 2px 8px 0 color-mix(in srgb, var(--border) 30%, transparent);
+	background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+	backdrop-filter: blur(12px) saturate(1.1);
+	-webkit-backdrop-filter: blur(12px) saturate(1.1);
+	animation: mobileNavIn 160ms ease;
+
+	.nav_link {
+		width: 100%;
+		padding-block: 0.75rem;
+	}
+}
+
+@keyframes mobileNavIn {
+	from {
+		opacity: 0;
+		transform: translateY(-0.25rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes backdropIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+/* Below the drawer breakpoint the inline nav collapses into the hamburger. */
+
+@media (max-width: 63.999rem) {
+	.right {
+		display: none;
+	}
+
+	.hamburger {
+		display: grid;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.backdrop,
+	.mobileNav {
+		animation: none;
+	}
+}
