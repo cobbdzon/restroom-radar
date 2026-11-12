@@ -30,6 +30,13 @@ COPY shared ./shared
 COPY server ./server
 COPY client ./client
 
+# VITE_SITE_URL comes from the compose build args (docker compose reads the
+# project .env automatically). Vite's loadEnv merges process env, so this value
+# decides whether the build bakes an absolute og:url into index.html. Blank ->
+# the tag is omitted entirely.
+ARG VITE_SITE_URL=""
+ENV VITE_SITE_URL="$VITE_SITE_URL"
+
 # Leave VITE_SERVER_URL unset so no environment-specific URL is baked into the
 # bundle. Nothing calls the API yet; this keeps it that way if that changes.
 ENV VITE_SERVER_URL=""

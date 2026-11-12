@@ -33,14 +33,14 @@
     "turbo"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^2.5.14",
+    "@biomejs/biome": "^2.6.7",
     "bun-types": "latest",
-    "turbo": "^2.11.4"
+    "turbo": "^2.11.11"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "hono": "^4.13.9"
+    "hono": "^4.13.18"
   }
 }

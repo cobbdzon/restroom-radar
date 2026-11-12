@@ -2,9 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <title>BHVR</title> -->
+    <meta
+      name="description"
+      content="Restroom Radar — a platform to aggregate reviews on all restrooms available in the campus."
+    />
+    <meta name="theme-color" content="#762e31" />
+    <title>Restroom Radar — campus restroom ratings, reviewed by students</title>
+    <link rel="icon" type="image/svg+xml" href="/radar.svg" />
+
+    <!-- Open Graph. og:url is env-driven: set VITE_SITE_URL (no trailing
+         slash) to a canonical origin so social embeds get an absolute URL,
+         e.g. VITE_SITE_URL=https://restroom-radar.example.com -->
+    <meta property="og:site_name" content="Restroom Radar" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Restroom Radar — campus restroom ratings, reviewed by students"
+    />
+    <meta
+      property="og:description"
+      content="A platform to aggregate reviews on all restrooms available in the campus."
+    />
+    <meta property="og:url" content="__SITE_URL__" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Restroom Radar — campus restroom ratings, reviewed by students"
+    />
+    <meta
+      name="twitter:description"
+      content="A platform to aggregate reviews on all restrooms available in the campus."
+    />
   </head>
   <body>
     <div id="root"></div>
