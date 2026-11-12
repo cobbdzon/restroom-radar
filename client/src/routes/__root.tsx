@@ -8,7 +8,7 @@ export const Route = createRootRoute({
 			{ name: "viewport", content: "width=device-width, initial-scale=1.0" },
 			{ title: "Restroom Radar" },
 		],
-		links: [{ rel: "icon", href: "/vite.svg" }],
+		links: [{ rel: "icon", href: "/radar.svg" }],
 	}),
 	component: () => (
 		<>

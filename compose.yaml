@@ -12,12 +12,22 @@
 # Override the published port with CLIENT_PORT:
 #
 #   CLIENT_PORT=3000 docker compose up --build
+#
+# Set VITE_SITE_URL in the project .env (read automatically by compose) to have
+# the client build embed an absolute og:url for social embeds. The value is
+# baked in at build time, so change it and rebuild:
+#
+#   VITE_SITE_URL=https://restroom-radar.example.com docker compose up --build
 
 services:
   client:
     build:
       context: .
       dockerfile: docker/Dockerfile.client
+      args:
+        # Baked into index.html as og:url during the client build (see
+        # vite.config.ts). Empty when unset -> the tag is omitted.
+        VITE_SITE_URL: ${VITE_SITE_URL:-}
     ports:
       - "${CLIENT_PORT:-8080}:8080"
     restart: unless-stopped
