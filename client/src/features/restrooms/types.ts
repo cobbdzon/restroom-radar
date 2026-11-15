@@ -1,41 +1,21 @@
-export const BUILDINGS = ["Main", "North", "South", "West"] as const;
-export type Building = (typeof BUILDINGS)[number];
+import type { Gender, RatingDimension, RestroomTag } from "shared";
 
-export const GENDERS = ["male", "female", "all-gender"] as const;
-export type Gender = (typeof GENDERS)[number];
+export {
+	BUILDINGS,
+	GENDERS,
+	RATING_DIMENSIONS,
+	RESTROOM_TAGS,
+} from "shared";
+export type {
+	Building,
+	Gender,
+	RatingDimension,
+	Restroom,
+	RestroomRatings,
+	RestroomTag,
+} from "shared";
 
-export const RESTROOM_TAGS = [
-	"soapPump",
-	"vending",
-	"bidet",
-	"seatCover",
-] as const;
-export type RestroomTag = (typeof RESTROOM_TAGS)[number];
-
-export const RATING_DIMENSIONS = [
-	"cleanliness",
-	"smell",
-	"privacy",
-	"comfort",
-	"accessibility",
-] as const;
-export type RatingDimension = (typeof RATING_DIMENSIONS)[number];
-
-export type RestroomRatings = Record<RatingDimension, number>;
-
-export type Restroom = {
-	restroomId: string;
-	name: string;
-	building: Building;
-	floor: number;
-	gender: Gender;
-	pwdAccessible: boolean;
-	tags: RestroomTag[];
-	stallCount: number;
-	/** Per-dimension ratings from student reviews; null when no reviews exist. */
-	ratings: RestroomRatings | null;
-	reviewCount: number;
-};
+// UI copy stays in the client; the domain model lives in `shared`.
 
 export const GENDER_LABELS: Record<Gender, string> = {
 	male: "Men's",

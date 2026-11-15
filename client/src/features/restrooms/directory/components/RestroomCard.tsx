@@ -2,11 +2,7 @@ import { Accessibility } from "lucide-react";
 import type { CSSProperties } from "react";
 import styles from "../../../../assets/styles/restroomCard.module.css";
 import { BUILDING_META } from "../../buildingMeta";
-import {
-	GENDER_LABELS,
-	TAG_LABELS,
-	type Restroom,
-} from "../../types";
+import { GENDER_LABELS, type Restroom, TAG_LABELS } from "../../types";
 import { overallRating } from "../directoryLogic";
 import { DimensionRatings } from "./DimensionRatings";
 
@@ -34,13 +30,11 @@ export function RestroomCard({ restroom }: { restroom: Restroom }) {
 							<span>{GENDER_LABELS[restroom.gender]} restroom</span>
 							<span
 								className={
-									restroom.pwdAccessible ? styles.pwd : styles.pwdOff
+									restroom.isPwdAccessible ? styles.pwd : styles.pwdOff
 								}
 							>
 								<Accessibility aria-hidden="true" />
-								{restroom.pwdAccessible
-									? "PWD accessible"
-									: "No PWD access"}
+								{restroom.isPwdAccessible ? "PWD accessible" : "No PWD access"}
 							</span>
 						</p>
 					</div>
@@ -53,9 +47,7 @@ export function RestroomCard({ restroom }: { restroom: Restroom }) {
 							<span className={styles.scorePoop} aria-hidden="true">
 								💩
 							</span>
-							<strong className={styles.scoreValue}>
-								{rating.toFixed(1)}
-							</strong>
+							<strong className={styles.scoreValue}>{rating.toFixed(1)}</strong>
 							<span className={styles.scoreOut} aria-hidden="true">
 								/5
 							</span>

@@ -44,7 +44,7 @@ export function applyFilters(
 		if (search.gender !== "all" && restroom.gender !== search.gender) {
 			return false;
 		}
-		if (search.pwd && !restroom.pwdAccessible) {
+		if (search.pwd && !restroom.isPwdAccessible) {
 			return false;
 		}
 		if (
