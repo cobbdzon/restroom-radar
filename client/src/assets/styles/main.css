@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Overpass:wght@400;500;600;700&display=swap");
 
 /* style resets */
 *,
@@ -15,7 +15,7 @@ html {
 }
 
 body {
-	line-height: 1.5;
+	line-height: 1.55;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	min-height: 100vh;
@@ -58,39 +58,55 @@ h6 {
 	overflow-wrap: break-word;
 }
 
+::selection {
+	background-color: var(--gold);
+	color: var(--ink);
+}
+
+:focus-visible {
+	outline: 2px solid var(--focus);
+	outline-offset: 2px;
+}
+
 /* global rules */
 
+/*
+ * The visual language borrows from campus wayfinding: painted door plates,
+ * building directory boards, floor markers, and inspection sheets. Porcelain
+ * tile is the ground, pine ink is the type, Mapúa cardinal and brass carry
+ * the accents, and each building keeps a fixed colour from the map legend.
+ */
 :root {
-	--font-primary: "Roboto", sans-serif;
-	--font-heading: "Montserrat", "Roboto", sans-serif;
+	color-scheme: light dark;
 
-	--shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1);
+	--font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+	--font-body: "Overpass", "Helvetica Neue", Arial, sans-serif;
 
-	--radius-sm: 0.25rem;
-	--radius-md: 0.5rem;
-	--radius-pill: 999px;
-	--radius-circle: 50%;
+	--tile: light-dark(#eef1ec, #0f1512);
+	--plate: light-dark(#fbfcf7, #18211c);
+	--plate-2: light-dark(#e4e9e2, #202b25);
+	--ink: light-dark(#17332c, #e9eee8);
+	--muted: light-dark(#56645d, #a5b2aa);
+	--line: light-dark(#c7cfc6, #33413a);
+	--line-strong: light-dark(#17332c, #e9eee8);
+	--cardinal: light-dark(#a6192e, #f06a78);
+	--cardinal-deep: #86101f;
+	--brand-fill: #a6192e;
+	--on-brand: #f7f4ec;
+	--gold: light-dark(#d99a18, #f0bd4f);
+	--panel: light-dark(#17332c, #0a100d);
+	--on-panel: #eef2ec;
+	--on-panel-muted: #a9b7ae;
+	--focus: light-dark(#a6192e, #f0bd4f);
+
+	--radius: 2px;
+	--shadow-hard: 3px 3px 0 var(--line);
+	--grid-line: color-mix(in srgb, var(--ink) 6%, transparent);
 
 	--space-xs: 0.25rem;
 	--space-sm: 0.5rem;
 	--space-md: 1rem;
 	--space-lg: 1.5rem;
-
-	color-scheme: light dark;
-	--bg-dark: light-dark(hsl(0 0% 90%), hsl(336 0% 1%));
-	--bg: light-dark(hsl(300 0% 95%), hsl(300 0% 4%));
-	--bg-light: light-dark(hsl(300 50% 100%), hsl(0 0% 9%));
-	--text: light-dark(hsl(300 0% 4%), hsl(300 0% 95%));
-	--text-muted: light-dark(hsl(0 0% 28%), hsl(300 0% 69%));
-	--highlight: light-dark(hsl(300 50% 100%), hsl(330 0% 39%));
-	--border: light-dark(hsl(0 0% 50%), hsl(0 0% 28%));
-	--border-muted: light-dark(hsl(340 0% 62%), hsl(300 0% 18%));
-	--primary: light-dark(hsl(357 44% 32%), hsl(0 66% 75%));
-	--secondary: light-dark(hsl(183 100% 9%), hsl(183 52% 57%));
-	--danger: light-dark(hsl(9 21% 41%), hsl(9 26% 64%));
-	--warning: light-dark(hsl(52 23% 34%), hsl(52 19% 57%));
-	--success: light-dark(hsl(147 19% 36%), hsl(146 17% 59%));
-	--info: light-dark(hsl(217 22% 41%), hsl(217 28% 65%));
 }
 
 :root[data-theme="light"] {
@@ -102,18 +118,30 @@ h6 {
 }
 
 body {
-	font-family: var(--font-primary);
+	font-family: var(--font-body);
 	font-weight: 400;
-
-	background-color: var(--bg);
-	color: var(--text);
+	color: var(--ink);
+	background-color: var(--tile);
+	background-image:
+		linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+	background-size: 56px 56px;
 }
 
 h1,
 h2,
-h3 {
-	font-family: var(--font-primary);
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-display);
 	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.005em;
+}
+
+a {
+	color: inherit;
 }
 
 a.unstyled_link {
@@ -121,21 +149,8 @@ a.unstyled_link {
 	cursor: pointer;
 }
 
-.styled_button {
-	width: fit-content;
-	text-decoration: none;
-	color: var(--bg-dark);
-	background-color: var(--text);
-
-	padding: 1rem 1.5rem;
-	border-radius: var(--radius-md);
-	box-shadow: var(--shadow);
-
-	&:hover {
-		background: var(--text-muted);
-	}
-
-	&.primary {
-		background-color: var(--primary);
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
 	}
 }
