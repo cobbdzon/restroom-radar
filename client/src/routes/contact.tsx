@@ -5,7 +5,7 @@ import { directoryLinkSearch } from "../features/restrooms/directory/searchParam
 
 export const Route = createFileRoute("/contact")({
 	head: () => ({
-		meta: [{ title: "Contact — Restroom Radar" }],
+		meta: [{ title: "Contact" }],
 	}),
 	component: RouteComponent,
 });

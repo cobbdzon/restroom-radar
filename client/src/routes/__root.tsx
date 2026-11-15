@@ -8,7 +8,7 @@ export const Route = createRootRoute({
 		meta: [
 			{ charSet: "utf-8" },
 			{ name: "viewport", content: "width=device-width, initial-scale=1.0" },
-			{ title: "Restroom Radar — campus restroom ratings, reviewed by students" },
+			{ title: "Restroom Radar" },
 		],
 		links: [{ rel: "icon", href: "/radar.svg" }],
 	}),

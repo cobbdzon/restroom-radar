@@ -40,7 +40,7 @@ export const Route = createFileRoute("/directory")({
 		middlewares: [stripSearchParams(DEFAULT_DIRECTORY_SEARCH)],
 	},
 	head: () => ({
-		meta: [{ title: "Restroom directory — Restroom Radar" }],
+		meta: [{ title: "Directory" }],
 	}),
 	component: RouteComponent,
 });

@@ -7,7 +7,7 @@ import { MOCK_RESTROOMS } from "../features/restrooms/mock";
 
 export const Route = createFileRoute("/about")({
 	head: () => ({
-		meta: [{ title: "About — Restroom Radar" }],
+		meta: [{ title: "About" }],
 	}),
 	component: RouteComponent,
 });
