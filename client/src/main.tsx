@@ -55,7 +55,6 @@ if (!rootElement) {
 	);
 }
 
-// Render the app
 if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(

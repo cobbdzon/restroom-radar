@@ -71,7 +71,6 @@ export function FilterPanel({
 
 	return (
 		<div className={panelClass}>
-			{/* Search */}
 			<div className={styles.section}>
 				<label className={styles.sectionLabel} htmlFor={`${idPrefix}-directory-search`}>
 					Search
@@ -124,7 +123,6 @@ export function FilterPanel({
 				</div>
 			</div>
 
-			{/* Gender */}
 			<fieldset className={`${styles.section} ${styles.fieldset}`}>
 				<legend className={styles.sectionLabel}>Gender</legend>
 				<div className={styles.pillGroup}>
@@ -153,7 +151,6 @@ export function FilterPanel({
 				</div>
 			</fieldset>
 
-			{/* Building */}
 			<div className={styles.section}>
 				<span className={styles.sectionLabel}>Building</span>
 				<div className={styles.pillGroup}>
@@ -187,7 +184,6 @@ export function FilterPanel({
 				</div>
 			</div>
 
-			{/* Tags */}
 			<div className={styles.section}>
 				<span className={styles.sectionLabel}>Amenities</span>
 				<div className={styles.pillGroup}>
@@ -211,7 +207,6 @@ export function FilterPanel({
 				</div>
 			</div>
 
-			{/* Minimum rating */}
 			<div className={styles.section}>
 				<label className={styles.sectionLabel} htmlFor={`${idPrefix}-directory-min-rating`}>
 					Minimum rating
@@ -262,7 +257,6 @@ export function FilterPanel({
 				</p>
 			</div>
 
-			{/* PWD accessible */}
 			<div className={styles.section}>
 				<span className={styles.sectionLabel}>Accessibility</span>
 				<label className={styles.toggleRow}>
@@ -279,7 +273,6 @@ export function FilterPanel({
 				</label>
 			</div>
 
-			{/* Reset */}
 			<button
 				type="button"
 				className={styles.resetButton}

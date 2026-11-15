@@ -15,8 +15,6 @@ export type {
 	RestroomTag,
 } from "shared";
 
-// UI copy stays in the client; the domain model lives in `shared`.
-
 export const GENDER_LABELS: Record<Gender, string> = {
 	male: "Men's",
 	female: "Women's",

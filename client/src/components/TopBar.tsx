@@ -36,7 +36,6 @@ function TopBar() {
 		}
 	}, [pathname]);
 
-	// Close on Escape.
 	useEffect(() => {
 		if (!open) {
 			return;
@@ -50,7 +49,6 @@ function TopBar() {
 		return () => window.removeEventListener("keydown", onKeyDown);
 	}, [open]);
 
-	// Close if the viewport grows back to desktop width.
 	useEffect(() => {
 		const mq = window.matchMedia("(min-width: 64rem)");
 		const onChange = () => {
