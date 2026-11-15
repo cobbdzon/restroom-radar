@@ -9,6 +9,20 @@
     />
     <meta name="theme-color" content="#17332c" />
     <title>Restroom Radar — campus restroom ratings, reviewed by students</title>
+
+    <!-- Apply a saved theme before first paint; otherwise follow the OS. -->
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem("theme");
+          if (saved === "light" || saved === "dark") {
+            document.documentElement.dataset.theme = saved;
+          }
+        } catch {
+          /* Storage can be unavailable; fall back to the OS setting. */
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/radar.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

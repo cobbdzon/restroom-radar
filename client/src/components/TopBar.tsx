@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, Radar, X } from "lucide-react";
+import { Menu, Moon, Radar, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import styles from "../assets/styles/TopBar.module.css";
 
@@ -9,9 +9,23 @@ const NAV_LINKS = [
 	{ to: "/contact", label: "Contact" },
 ] as const;
 
+type Theme = "light" | "dark";
+
+/** The inline script in index.html applies a saved theme before first paint. */
+function currentTheme(): Theme {
+	const applied = document.documentElement.dataset.theme;
+	if (applied === "light" || applied === "dark") {
+		return applied;
+	}
+	return window.matchMedia("(prefers-color-scheme: dark)").matches
+		? "dark"
+		: "light";
+}
+
 function TopBar() {
 	const { pathname } = useLocation();
 	const [open, setOpen] = useState(false);
+	const [theme, setTheme] = useState<Theme>(currentTheme);
 	const prevPathname = useRef(pathname);
 
 	// Close when the route changes (e.g. picking a link from the menu).
@@ -49,6 +63,32 @@ function TopBar() {
 		return () => mq.removeEventListener("change", onChange);
 	}, []);
 
+	// Follow the OS theme until someone picks one with the toggle.
+	useEffect(() => {
+		const mq = window.matchMedia("(prefers-color-scheme: dark)");
+		const onChange = (event: MediaQueryListEvent) => {
+			if (!document.documentElement.dataset.theme) {
+				setTheme(event.matches ? "dark" : "light");
+			}
+		};
+		mq.addEventListener("change", onChange);
+		return () => mq.removeEventListener("change", onChange);
+	}, []);
+
+	const toggleTheme = () => {
+		const next: Theme = theme === "dark" ? "light" : "dark";
+		setTheme(next);
+		document.documentElement.dataset.theme = next;
+		try {
+			localStorage.setItem("theme", next);
+		} catch {
+			// The choice still applies for this session.
+		}
+	};
+
+	const themeAction =
+		theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+
 	const renderLinks = () =>
 		NAV_LINKS.map((link) => {
 			const isActive = pathname === link.to;
@@ -79,6 +119,19 @@ function TopBar() {
 				<nav className={styles.right} aria-label="Primary">
 					{renderLinks()}
 				</nav>
+				<button
+					type="button"
+					className={styles.themeToggle}
+					aria-label={themeAction}
+					title={themeAction}
+					onClick={toggleTheme}
+				>
+					{theme === "dark" ? (
+						<Sun aria-hidden="true" />
+					) : (
+						<Moon aria-hidden="true" />
+					)}
+				</button>
 				<button
 					type="button"
 					className={styles.hamburger}
