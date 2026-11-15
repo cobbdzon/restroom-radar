@@ -66,25 +66,30 @@ function TopBar() {
 
 	return (
 		<div className={styles.topbar}>
-			<div className={styles.left}>
-				<Link to="/" className={styles.logo_link}>
-					<Radar className={styles.logo_icon} aria-hidden="true" />
-					Restroom Radar
-				</Link>
+			<Link to="/" className={styles.logo_link}>
+				<span className={styles.logo_mark} aria-hidden="true">
+					<Radar />
+				</span>
+				<span className={styles.logo_word}>
+					<span className={styles.logo_name}>Restroom Radar</span>
+					<span className={styles.logo_place}>Mapúa Intramuros</span>
+				</span>
+			</Link>
+			<div className={styles.controls}>
+				<nav className={styles.right} aria-label="Primary">
+					{renderLinks()}
+				</nav>
+				<button
+					type="button"
+					className={styles.hamburger}
+					aria-expanded={open}
+					aria-controls="primary-nav"
+					aria-label={open ? "Close menu" : "Open menu"}
+					onClick={() => setOpen((prev) => !prev)}
+				>
+					{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+				</button>
 			</div>
-			<nav className={styles.right} aria-label="Primary">
-				{renderLinks()}
-			</nav>
-			<button
-				type="button"
-				className={styles.hamburger}
-				aria-expanded={open}
-				aria-controls="primary-nav"
-				aria-label={open ? "Close menu" : "Open menu"}
-				onClick={() => setOpen((prev) => !prev)}
-			>
-				{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-			</button>
 			{open && (
 				<>
 					<button

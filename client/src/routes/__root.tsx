@@ -1,19 +1,23 @@
 import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import SiteFooter from "../components/SiteFooter";
+import TopBar from "../components/TopBar";
 
 export const Route = createRootRoute({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
 			{ name: "viewport", content: "width=device-width, initial-scale=1.0" },
-			{ title: "Restroom Radar" },
+			{ title: "Restroom Radar — campus restroom ratings, reviewed by students" },
 		],
 		links: [{ rel: "icon", href: "/radar.svg" }],
 	}),
 	component: () => (
 		<>
 			<HeadContent />
+			<TopBar />
 			<Outlet />
+			<SiteFooter />
 			<TanStackRouterDevtools />
 		</>
 	),

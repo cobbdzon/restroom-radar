@@ -1,0 +1,141 @@
+.footer {
+	margin-top: clamp(4rem, 9vw, 7rem);
+	border-top: 6px solid var(--cardinal);
+	background-color: var(--panel);
+	color: var(--on-panel);
+}
+
+.inner {
+	display: grid;
+	grid-template-columns: 1.6fr repeat(3, 1fr);
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	max-width: 76rem;
+	margin-inline: auto;
+	padding: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)
+		clamp(2rem, 4vw, 3rem);
+}
+
+.brandCol {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	max-width: 20rem;
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.65rem;
+	width: fit-content;
+	color: var(--on-panel);
+	font-family: var(--font-display);
+	font-size: 1.5rem;
+	font-weight: 700;
+	letter-spacing: 0.015em;
+	text-decoration: none;
+
+	&:focus-visible {
+		outline: 2px solid var(--gold);
+		outline-offset: 4px;
+	}
+}
+
+.mark {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	background-color: var(--brand-fill);
+	color: var(--on-brand);
+}
+
+.mark svg {
+	width: 1.05rem;
+	height: 1.05rem;
+}
+
+.blurb {
+	color: var(--on-panel-muted);
+	font-size: 0.875rem;
+	line-height: 1.6;
+}
+
+.linkCol {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.45rem;
+	font-size: 0.9375rem;
+}
+
+.linkCol h2 {
+	margin-bottom: 0.35rem;
+	font-family: var(--font-body);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: var(--gold);
+}
+
+.linkCol a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--on-panel);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+
+	&:hover {
+		border-bottom-color: var(--gold);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--gold);
+		outline-offset: 3px;
+	}
+}
+
+.linkCol a svg {
+	width: 0.9rem;
+	height: 0.9rem;
+}
+
+.linkCol p {
+	color: var(--on-panel-muted);
+	line-height: 1.6;
+}
+
+.note {
+	max-width: 14rem;
+	font-size: 0.8125rem;
+}
+
+.bottom {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 0.5rem;
+	max-width: 76rem;
+	margin-inline: auto;
+	padding: 1rem clamp(1rem, 4vw, 2rem) 1.5rem;
+	border-top: 1px solid color-mix(in srgb, var(--on-panel) 18%, transparent);
+	color: var(--on-panel-muted);
+	font-size: 0.75rem;
+}
+
+@media (max-width: 60rem) {
+	.inner {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 36rem) {
+	.inner {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.brandCol {
+		max-width: none;
+	}
+}
