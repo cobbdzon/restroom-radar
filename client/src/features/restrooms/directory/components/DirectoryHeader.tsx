@@ -1,38 +1,35 @@
-import { MapPin, Plus } from "lucide-react";
+import { MapPin } from "lucide-react";
 import styles from "../../../../assets/styles/directory.module.css";
 
 type DirectoryHeaderProps = {
-	total: number;
-	shown: number;
+	/** Null while the first load is in flight. */
+	total: number | null;
 	buildingCount: number;
 };
 
 export function DirectoryHeader({
 	total,
-	shown,
 	buildingCount,
 }: DirectoryHeaderProps) {
 	return (
-		<header className={styles.directoryHeader}>
-			<div className={styles.directoryTitleGroup}>
-				<span className={styles.directoryIcon} aria-hidden="true">
-					<MapPin />
-				</span>
-				<div>
-					<h2 className={styles.directoryTitle}>Directory</h2>
-					<p className={styles.directorySubtitle}>
-						{total} restrooms across {buildingCount} buildings
+		<header className={styles.pageHeader}>
+			<div className={styles.pageHeaderInner}>
+				<p className={styles.place}>
+					<MapPin aria-hidden="true" />
+					Mapúa Intramuros
+				</p>
+				<div className={styles.headerRow}>
+					<h1 className={styles.title}>Restroom directory</h1>
+					<p className={styles.headerStatus}>
+						{total === null
+							? "Loading restrooms"
+							: `${total} restrooms, ${buildingCount} buildings`}
 					</p>
 				</div>
-			</div>
-			<div className={styles.directoryActions}>
-				<span className={styles.resultCount}>
-					Showing {shown} of {total}
-				</span>
-				<button type="button" className={styles.ctaButton} disabled>
-					<Plus aria-hidden="true" />
-					Suggest a restroom
-				</button>
+				<p className={styles.subtitle}>
+					Filter by building, gender, amenities, or rating. Every listing shows
+					the floor, stall count, and PWD access.
+				</p>
 			</div>
 		</header>
 	);

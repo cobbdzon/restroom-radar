@@ -1,69 +1,97 @@
-import { ChevronRight } from "lucide-react";
+import { Accessibility } from "lucide-react";
+import type { CSSProperties } from "react";
 import styles from "../../../../assets/styles/restroomCard.module.css";
-import { GENDER_LABELS, type Restroom } from "../../types";
+import { BUILDING_META } from "../../buildingMeta";
+import {
+	GENDER_LABELS,
+	TAG_LABELS,
+	type Restroom,
+} from "../../types";
 import { overallRating } from "../directoryLogic";
 import { DimensionRatings } from "./DimensionRatings";
 
 export function RestroomCard({ restroom }: { restroom: Restroom }) {
 	const rating = restroom.ratings === null ? null : overallRating(restroom);
+	const building = BUILDING_META[restroom.building];
 
 	return (
-		<article className={styles.card}>
-			<div className={styles.cardTop}>
-				<div className={styles.cardIdentity}>
-					<span className={styles.avatar} aria-hidden="true">
-						{restroom.building.charAt(0)}
-					</span>
-					<div>
-						<h3 className={styles.cardTitle}>{restroom.restroomId}</h3>
-						<p className={styles.cardMeta}>
-							{restroom.building} Building · {restroom.floor}F ·{" "}
-							{GENDER_LABELS[restroom.gender]}
-							{restroom.pwdAccessible ? " · PWD" : ""}
-						</p>
-					</div>
-				</div>
-				{rating !== null ? (
-					<span
-						className={styles.ratingPill}
-						title="Average student rating, 1–5"
-					>
-						💩 {rating.toFixed(1)}
-					</span>
-				) : (
-					<span
-						className={`${styles.ratingPill} ${styles.ratingPillEmpty}`}
-						title="No reviews yet"
-					>
-						New
-					</span>
-				)}
+		<article
+			className={styles.card}
+			style={{ "--building": building.color } as CSSProperties}
+		>
+			<div className={styles.plateTop}>
+				<span className={styles.plateCode}>{restroom.restroomId}</span>
+				<span className={styles.plateFloor}>
+					{building.short}, floor {restroom.floor}
+				</span>
 			</div>
 
-			{restroom.ratings !== null && (
-				<DimensionRatings ratings={restroom.ratings} />
-			)}
+			<div className={styles.cardBody}>
+				<div className={styles.cardHead}>
+					<div className={styles.identity}>
+						<h2 className={styles.cardTitle}>{restroom.name}</h2>
+						<p className={styles.cardMeta}>
+							<span>{GENDER_LABELS[restroom.gender]} restroom</span>
+							<span
+								className={
+									restroom.pwdAccessible ? styles.pwd : styles.pwdOff
+								}
+							>
+								<Accessibility aria-hidden="true" />
+								{restroom.pwdAccessible
+									? "PWD accessible"
+									: "No PWD access"}
+							</span>
+						</p>
+					</div>
+					{rating !== null ? (
+						<span
+							className={styles.scoreBox}
+							role="img"
+							aria-label={`Rated ${rating.toFixed(1)} out of 5`}
+						>
+							<span className={styles.scorePoop} aria-hidden="true">
+								💩
+							</span>
+							<strong className={styles.scoreValue}>
+								{rating.toFixed(1)}
+							</strong>
+							<span className={styles.scoreOut} aria-hidden="true">
+								/5
+							</span>
+						</span>
+					) : (
+						<span className={styles.scoreNew}>New</span>
+					)}
+				</div>
 
-			{restroom.reviewCount === 0 ? (
-				<p className={styles.cardQuote}>
-					"No user reviews yet — be the first to rate."
-				</p>
-			) : (
-				<p className={styles.cardReviews}>
-					Average of {restroom.reviewCount}{" "}
-					{restroom.reviewCount === 1 ? "review" : "reviews"}.
-				</p>
-			)}
+				{restroom.ratings !== null ? (
+					<DimensionRatings ratings={restroom.ratings} />
+				) : (
+					<p className={styles.noRatings}>No student ratings yet.</p>
+				)}
 
-			<footer className={styles.cardFooter}>
-				<span className={styles.stallCount}>
-					{restroom.stallCount} {restroom.stallCount === 1 ? "stall" : "stalls"}
-				</span>
-				<span className={styles.detailsLink}>
-					Details
-					<ChevronRight aria-hidden="true" />
-				</span>
-			</footer>
+				{restroom.tags.length > 0 && (
+					<ul className={styles.tagList} aria-label="Amenities">
+						{restroom.tags.map((tag) => (
+							<li key={tag} className={styles.tag}>
+								{TAG_LABELS[tag]}
+							</li>
+						))}
+					</ul>
+				)}
+
+				<footer className={styles.cardFooter}>
+					<span>
+						{restroom.stallCount}{" "}
+						{restroom.stallCount === 1 ? "stall" : "stalls"}
+					</span>
+					<span>
+						{restroom.reviewCount}{" "}
+						{restroom.reviewCount === 1 ? "review" : "reviews"}
+					</span>
+				</footer>
+			</div>
 		</article>
 	);
 }

@@ -6,12 +6,12 @@
 .skeletonLine,
 .skeletonCardTop,
 .skeletonCardBottom {
-	border-radius: var(--radius-md);
-	background-color: color-mix(in srgb, var(--text-muted) 14%, transparent);
+	border-radius: 1px;
+	background-color: var(--plate-2);
 	background-image: linear-gradient(
 		90deg,
 		transparent 0%,
-		color-mix(in srgb, var(--bg-light) 60%, transparent) 50%,
+		color-mix(in srgb, var(--plate) 65%, transparent) 50%,
 		transparent 100%
 	);
 	background-size: 200% 100%;
@@ -23,15 +23,16 @@
 	flex: 0 0 auto;
 	flex-direction: column;
 	gap: 1rem;
-	width: 17rem;
-	padding: 1rem;
-	border: 1px solid var(--border-muted);
-	border-radius: var(--radius-md);
+	width: 18rem;
+	padding: 1.15rem;
+	border: 1px solid var(--line-strong);
+	border-top: 4px solid var(--ink);
+	border-radius: var(--radius);
 }
 
 .skeletonHeader {
 	width: 6rem;
-	height: 1.25rem;
+	height: 1.5rem;
 }
 
 .skeletonLabel {
@@ -50,43 +51,47 @@
 }
 
 .skeletonPill {
-	width: 5rem;
-	height: 2rem;
-	border-radius: var(--radius-pill);
+	width: 4.5rem;
+	height: 1.75rem;
 }
 
 .skeletonSlider {
-	height: 0.5rem;
-	border-radius: var(--radius-pill);
+	height: 0.4rem;
 }
 
 .gridSkeleton {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fill, minmax(17.25rem, 1fr));
+	gap: 1rem;
 }
 
 .skeletonCard {
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
-	padding: 1.25rem;
-	border: 1px solid var(--border-muted);
-	border-radius: var(--radius-md);
+	gap: 0.9rem;
+	padding: 0.85rem;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background-color: var(--plate);
 }
 
 .skeletonCardTop {
-	width: 60%;
-	height: 2.5rem;
+	height: 2rem;
+	margin: -0.85rem -0.85rem 0;
+	border-radius: 0;
+	background-color: var(--line);
+	background-image: none;
+	animation: none;
 }
 
 .skeletonLine {
-	height: 1rem;
+	height: 0.9rem;
 }
 
 .skeletonCardBottom {
-	width: 40%;
-	height: 1.25rem;
+	width: 45%;
+	height: 1.1rem;
+	margin-top: 0.5rem;
 }
 
 .visuallyHidden {

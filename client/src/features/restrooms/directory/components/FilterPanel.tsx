@@ -1,6 +1,7 @@
 import { RotateCcw, Search } from "lucide-react";
 import { type CSSProperties, useEffect, useState } from "react";
 import styles from "../../../../assets/styles/filterSidebar.module.css";
+import { BUILDING_META } from "../../buildingMeta";
 import {
 	BUILDINGS,
 	GENDER_LABELS,
@@ -13,8 +14,6 @@ import {
 	DEFAULT_DIRECTORY_SEARCH,
 	type DirectorySearch,
 	type MinRating,
-	SORT_OPTIONS,
-	type SortKey,
 } from "../searchParams";
 
 const SEARCH_DEBOUNCE_MS = 250;
@@ -68,46 +67,26 @@ export function FilterPanel({
 	const sliderFill = ((search.minRating - 1) / 4) * 100;
 
 	const panelClass = variant === "drawer" ? styles.panelDrawer : styles.panel;
+	const idPrefix = variant === "drawer" ? "drawer" : "desktop";
 
 	return (
 		<div className={panelClass}>
-			{/* Sort order */}
-			<div className={styles.section}>
-				<label className={styles.sectionLabel} htmlFor="directory-sort">
-					Sort Order
-				</label>
-				<select
-					id="directory-sort"
-					className={styles.select}
-					value={search.sort}
-					onChange={(event) =>
-						onChange({ sort: event.target.value as SortKey })
-					}
-				>
-					{SORT_OPTIONS.map((option) => (
-						<option key={option.value} value={option.value}>
-							{option.label}
-						</option>
-					))}
-				</select>
-			</div>
-
 			{/* Search */}
 			<div className={styles.section}>
-				<label className={styles.sectionLabel} htmlFor="directory-search">
+				<label className={styles.sectionLabel} htmlFor={`${idPrefix}-directory-search`}>
 					Search
 				</label>
 				<div className={styles.searchGroup}>
 					<Search className={styles.searchIcon} aria-hidden="true" />
 					<input
-						id="directory-search"
+						id={`${idPrefix}-directory-search`}
 						type="text"
 						role="combobox"
 						aria-autocomplete="list"
-						aria-controls="directory-search-suggestions"
+						aria-controls={`${idPrefix}-directory-search-suggestions`}
 						aria-expanded={activeSuggestions.length > 0}
 						className={styles.searchInput}
-						placeholder="Search name or building…"
+						placeholder="Name, code, or building"
 						value={queryValue}
 						onChange={(event) => setQueryValue(event.target.value)}
 						onFocus={() => setShowSuggestions(true)}
@@ -123,7 +102,7 @@ export function FilterPanel({
 					/>
 					{activeSuggestions.length > 0 && (
 						<div
-							id="directory-search-suggestions"
+							id={`${idPrefix}-directory-search-suggestions`}
 							className={styles.suggestions}
 						>
 							{activeSuggestions.map((suggestion) => (
@@ -184,7 +163,12 @@ export function FilterPanel({
 							<button
 								key={building}
 								type="button"
-								className={`${styles.pill}${isSelected ? ` ${styles.selected}` : ""}`}
+								className={`${styles.pill} ${styles.buildingPill}${isSelected ? ` ${styles.selected}` : ""}`}
+								style={
+									{
+										"--building": BUILDING_META[building].color,
+									} as CSSProperties
+								}
 								aria-pressed={isSelected}
 								onClick={() =>
 									onChange({
@@ -192,7 +176,8 @@ export function FilterPanel({
 									})
 								}
 							>
-								{building}
+								<span className={styles.pillDot} aria-hidden="true" />
+								{BUILDING_META[building].short}
 								<span className={styles.pillCount}>
 									{counts.building[building] ?? 0}
 								</span>
@@ -204,7 +189,7 @@ export function FilterPanel({
 
 			{/* Tags */}
 			<div className={styles.section}>
-				<span className={styles.sectionLabel}>Tags</span>
+				<span className={styles.sectionLabel}>Amenities</span>
 				<div className={styles.pillGroup}>
 					{RESTROOM_TAGS.map((tag) => {
 						const isSelected = search.tags.includes(tag);
@@ -228,17 +213,22 @@ export function FilterPanel({
 
 			{/* Minimum rating */}
 			<div className={styles.section}>
-				<label className={styles.sectionLabel} htmlFor="directory-min-rating">
+				<label className={styles.sectionLabel} htmlFor={`${idPrefix}-directory-min-rating`}>
 					Minimum rating
 				</label>
 				<input
-					id="directory-min-rating"
+					id={`${idPrefix}-directory-min-rating`}
 					type="range"
 					className={styles.slider}
 					min={1}
 					max={5}
 					step={1}
 					value={search.minRating}
+					aria-valuetext={
+						search.minRating === 1
+							? "Any rating"
+							: `${search.minRating} and up`
+					}
 					onChange={(event) =>
 						onChange({
 							minRating: Number(event.target.value) as MinRating,
@@ -248,7 +238,13 @@ export function FilterPanel({
 				/>
 				<p className={styles.sliderRow}>
 					<span>
-						{search.minRating === 1 ? "Any rating" : `💩 ≥ ${search.minRating}`}
+						{search.minRating === 1 ? (
+							"Any rating"
+						) : (
+							<>
+								<span aria-hidden="true">💩</span> {search.minRating} and up
+							</>
+						)}
 					</span>
 					{search.minRating > 1 && (
 						<button

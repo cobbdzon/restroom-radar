@@ -14,10 +14,10 @@ export type SortKey =
 	| "building-floor";
 
 export const SORT_OPTIONS: { value: SortKey; label: string }[] = [
-	{ value: "highest-rated", label: "Highest Rated" },
-	{ value: "lowest-rated", label: "Lowest Rated" },
-	{ value: "name-asc", label: "Name (A to Z)" },
-	{ value: "building-floor", label: "Building & Floor" },
+	{ value: "building-floor", label: "Building and floor" },
+	{ value: "highest-rated", label: "Highest rated" },
+	{ value: "lowest-rated", label: "Lowest rated" },
+	{ value: "name-asc", label: "Room code, A to Z" },
 ];
 
 export type GenderFilter = "all" | Gender;
@@ -44,6 +44,17 @@ export const DEFAULT_DIRECTORY_SEARCH: DirectorySearch = {
 	minRating: 1,
 };
 
+/**
+ * Build a link payload with only the filters being set. The `/directory`
+ * validator fills in the defaults, so links stay short
+ * (`/directory?building=Main`) instead of serialising every default.
+ */
+export function directoryLinkSearch(
+	patch: Partial<DirectorySearch> = {},
+): DirectorySearch {
+	return patch as DirectorySearch;
+}
+
 const SORT_KEYS: SortKey[] = [
 	"highest-rated",
 	"lowest-rated",
@@ -55,7 +66,7 @@ const MIN_RATING_VALUES: MinRating[] = [1, 2, 3, 4, 5];
 
 function toStringList(value: unknown): string[] {
 	if (typeof value === "string") {
-		return value ? [value] : [];
+		return value.split(",").filter(Boolean);
 	}
 	if (Array.isArray(value)) {
 		return value.filter((item): item is string => typeof item === "string");

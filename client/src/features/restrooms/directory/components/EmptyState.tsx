@@ -7,9 +7,9 @@ export function EmptyState({ onReset }: { onReset: () => void }) {
 			<span className={styles.emptyIcon} aria-hidden="true">
 				<SearchX />
 			</span>
-			<h3 className={styles.emptyTitle}>No restrooms found</h3>
+			<h3 className={styles.emptyTitle}>No restrooms match that.</h3>
 			<p className={styles.emptyText}>
-				No restrooms match your current filters.
+				Try removing a filter, or search for a building name instead.
 			</p>
 			<button type="button" className={styles.emptyReset} onClick={onReset}>
 				Clear filters

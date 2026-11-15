@@ -1,14 +1,13 @@
 import {
 	createFileRoute,
+	stripSearchParams,
 	useNavigate,
 	useSearch,
 } from "@tanstack/react-router";
 import { useCallback, useMemo } from "react";
 import styles from "../assets/styles/directory.module.css";
 import skeletonStyles from "../assets/styles/skeleton.module.css";
-import TopBar from "../components/TopBar";
 import { DirectoryHeader } from "../features/restrooms/directory/components/DirectoryHeader";
-import { DirectoryHero } from "../features/restrooms/directory/components/DirectoryHero";
 import { EmptyState } from "../features/restrooms/directory/components/EmptyState";
 import { FilterSidebar } from "../features/restrooms/directory/components/FilterSidebar";
 import { MobileFilters } from "../features/restrooms/directory/components/MobileFilters";
@@ -24,8 +23,11 @@ import {
 	tagCounts,
 } from "../features/restrooms/directory/directoryLogic";
 import {
+	DEFAULT_DIRECTORY_SEARCH,
 	type DirectorySearch,
 	parseDirectorySearch,
+	SORT_OPTIONS,
+	type SortKey,
 } from "../features/restrooms/directory/searchParams";
 import type { Restroom } from "../features/restrooms/types";
 import { useDirectoryRestrooms } from "../features/restrooms/useDirectoryRestrooms";
@@ -34,8 +36,11 @@ const MAX_SUGGESTIONS = 5;
 
 export const Route = createFileRoute("/directory")({
 	validateSearch: parseDirectorySearch,
+	search: {
+		middlewares: [stripSearchParams(DEFAULT_DIRECTORY_SEARCH)],
+	},
 	head: () => ({
-		meta: [{ title: "Directory" }],
+		meta: [{ title: "Restroom directory — Restroom Radar" }],
 	}),
 	component: RouteComponent,
 });
@@ -97,56 +102,75 @@ function RouteComponent() {
 			: "";
 
 	return (
-		<>
-			<TopBar />
-			<main className={styles.page}>
-				<DirectoryHero />
+		<main className={styles.page}>
+			<DirectoryHeader
+				total={isPending ? null : data.length}
+				buildingCount={Object.keys(counts.building).length}
+			/>
 
-				{isPending ? (
-					<div className={styles.main}>
-						<SidebarSkeleton />
-						<div className={styles.results} aria-busy="true">
-							<GridSkeleton />
+			{isPending ? (
+				<div className={styles.main}>
+					<SidebarSkeleton />
+					<div className={styles.results}>
+						<div className={styles.toolbar}>
+							<p className={styles.resultCount}>Loading restrooms</p>
 						</div>
+						<GridSkeleton count={6} />
 					</div>
-				) : (
-					<div className={styles.main}>
-						<FilterSidebar
-							search={search}
-							counts={counts}
-							suggestions={suggestions}
-							onChange={updateSearch}
-						/>
-						<div className={styles.results} aria-busy={isFiltering}>
-							<DirectoryHeader
-								total={data.length}
-								shown={results.length}
-								buildingCount={Object.keys(counts.building).length}
-							/>
-							{isFiltering ? (
-								<GridSkeleton />
-							) : results.length > 0 ? (
+				</div>
+			) : (
+				<div className={styles.main}>
+					<FilterSidebar
+						search={search}
+						counts={counts}
+						suggestions={suggestions}
+						onChange={updateSearch}
+					/>
+					<div className={styles.results} aria-busy={isFiltering}>
+						<div className={styles.toolbar}>
+							<p className={styles.resultCount}>
+								Showing <strong>{results.length}</strong> of {data.length}
+							</p>
+							<label className={styles.sortControl} htmlFor="sort-order">
+								<span>Sort</span>
+								<select
+									id="sort-order"
+									value={search.sort}
+									onChange={(event) =>
+										updateSearch({ sort: event.target.value as SortKey })
+									}
+								>
+									{SORT_OPTIONS.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.label}
+										</option>
+									))}
+								</select>
+							</label>
+						</div>
+						<div className={isFiltering ? styles.busy : undefined}>
+							{results.length > 0 ? (
 								<RestroomGrid restrooms={results} />
 							) : (
 								<EmptyState onReset={() => updateSearch(resetFilters())} />
 							)}
 						</div>
 					</div>
-				)}
+				</div>
+			)}
 
-				<p className={skeletonStyles.visuallyHidden} role="status">
-					{statusMessage}
-				</p>
+			<p className={skeletonStyles.visuallyHidden} role="status">
+				{statusMessage}
+			</p>
 
-				{!isPending && (
-					<MobileFilters
-						search={search}
-						counts={counts}
-						suggestions={suggestions}
-						onChange={updateSearch}
-					/>
-				)}
-			</main>
-		</>
+			{!isPending && (
+				<MobileFilters
+					search={search}
+					counts={counts}
+					suggestions={suggestions}
+					onChange={updateSearch}
+				/>
+			)}
+		</main>
 	);
 }

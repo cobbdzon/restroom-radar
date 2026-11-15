@@ -1,10 +1,10 @@
+import type { CSSProperties } from "react";
 import styles from "../../../../assets/styles/restroomCard.module.css";
 import {
 	DIMENSION_LABELS,
 	RATING_DIMENSIONS,
 	type RestroomRatings,
 } from "../../types";
-import { RatingPills } from "./RatingPills";
 
 export function DimensionRatings({ ratings }: { ratings: RestroomRatings }) {
 	return (
@@ -15,10 +15,19 @@ export function DimensionRatings({ ratings }: { ratings: RestroomRatings }) {
 						{DIMENSION_LABELS[dimension]}
 					</dt>
 					<dd className={styles.dimensionValue}>
-						<RatingPills
-							value={ratings[dimension]}
-							label={DIMENSION_LABELS[dimension]}
-						/>
+						<span className={styles.meterTrack} aria-hidden="true">
+							<span
+								className={styles.meterFill}
+								style={
+									{
+										"--score": `${(ratings[dimension] / 5) * 100}%`,
+									} as CSSProperties
+								}
+							/>
+						</span>
+						<span className={styles.dimensionScore}>
+							{ratings[dimension].toFixed(1)}
+						</span>
 					</dd>
 				</div>
 			))}

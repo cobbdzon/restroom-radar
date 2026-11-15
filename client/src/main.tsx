@@ -9,7 +9,38 @@ const queryClient = new QueryClient();
 
 import { routeTree } from "./routeTree.gen";
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+	routeTree,
+	// Keep shareable directory links short: arrays become comma-separated
+	// values instead of JSON, and `/directory` defaults never hit the URL.
+	parseSearch: (searchStr) => {
+		const params = new URLSearchParams(searchStr);
+		const search: Record<string, string | string[]> = {};
+		for (const key of new Set(params.keys())) {
+			const values = params.getAll(key);
+			search[key] = values.length > 1 ? values : values[0];
+		}
+		return search;
+	},
+	stringifySearch: (search) => {
+		const params = new URLSearchParams();
+		for (const [key, value] of Object.entries(search)) {
+			if (value === undefined || value === null || value === "") {
+				continue;
+			}
+			if (Array.isArray(value)) {
+				if (value.length === 0) {
+					continue;
+				}
+				params.set(key, value.join(","));
+				continue;
+			}
+			params.set(key, String(value));
+		}
+		const query = params.toString();
+		return query ? `?${query}` : "";
+	},
+});
 
 declare module "@tanstack/react-router" {
 	interface Register {
