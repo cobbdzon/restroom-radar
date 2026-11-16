@@ -1,20 +1,14 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import restroomsApp from "./features/restrooms";
+import { seedRestrooms } from "./db/data/restrooms";
+import { InMemoryRestroomRepository } from "./db/in-memory";
+import { createRestroomsApp } from "./features/restrooms";
 
-export const app = new Hono().use(cors()).route("/restrooms", restroomsApp);
+// Composition root. When DATABASE_URL is set, swap in the Postgres repo (Step 2).
+const repo = new InMemoryRestroomRepository(seedRestrooms);
 
-// app.get("/", (c) => {
-// 	return c.text("Hello Hono!");
-// });
-//
-// app.get("/hello", async (c) => {
-// 	const data: ApiResponse = {
-// 		message: "Hello BHVR!",
-// 		success: true,
-// 	};
-//
-// 	return c.json(data, { status: 200 });
-// });
+export const app = new Hono()
+	.use(cors())
+	.route("/restrooms", createRestroomsApp(repo));
 
 export default app;

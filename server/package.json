@@ -18,10 +18,14 @@
     "dev": "bun --watch run src/index.ts & tsc --watch"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.4",
     "hono": "^4.10.8",
+    "pg": "^8.23.1",
     "shared": "workspace:*"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.11"
   }
 }

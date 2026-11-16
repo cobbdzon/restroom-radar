@@ -1,10 +1,22 @@
 import { Hono } from "hono";
-import type { Restroom } from "shared";
+import type { RestroomRepository } from "../db/repository";
 
-const app = new Hono().get("/", async (c) => {
-	// Seed data lands with the repository; the client still runs on mock data.
-	const data: Restroom[] = [];
-	return c.json(data, { status: 200 });
-});
+export const createRestroomsApp = (repo: RestroomRepository) => {
+	const app = new Hono()
+		.get("/", async (c) => {
+			const data = await repo.list();
+			return c.json(data, { status: 200 });
+		})
+		.get("/:id", async (c) => {
+			const id = c.req.param("id");
+			const found = await repo.getById(id);
+			if (!found) {
+				return c.json({ message: "Restroom not found" }, { status: 404 });
+			}
+			return c.json(found, { status: 200 });
+		});
 
-export default app;
+	return app;
+};
+
+export default createRestroomsApp;
